@@ -20,6 +20,26 @@ public class DoublyLinkedList {
 
     private static final Logger logger = LoggerFactory.getLogger(DoublyLinkedListComponent.class);
 
+
+    //Singleton Pattern
+    private static DoublyLinkedList DoublyLinkedListInstance;
+
+    private DoublyLinkedList()
+    {
+
+    }
+
+    //a static creation method for Singleton Pattern
+    public static DoublyLinkedList getDoublyLinkedList()
+    {
+        if (DoublyLinkedListInstance == null)
+        {
+            DoublyLinkedListInstance = new DoublyLinkedList();
+        }
+        return DoublyLinkedListInstance;
+    }
+
+
     /**
      * Add an element at the end of the list
      * @param e New list element
