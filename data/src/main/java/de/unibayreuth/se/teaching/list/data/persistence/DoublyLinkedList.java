@@ -1,5 +1,7 @@
 package de.unibayreuth.se.teaching.list.data.persistence;
 
+import de.unibayreuth.se.teaching.list.data.pattern.Subject;
+import de.unibayreuth.se.teaching.list.data.pattern.Observer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -7,13 +9,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Our doubly linked list implementation from previous assignments.
  */
 @Getter
 @Setter
 @Slf4j
-public class DoublyLinkedList {
+public class DoublyLinkedList implements Subject
+{
     private Element start;
     private Element end;
     private int length;
@@ -146,6 +152,7 @@ public class DoublyLinkedList {
         start = null;
         end = null;
         length = 0;
+        updateObservers();
     }
 
     /**
@@ -205,5 +212,26 @@ public class DoublyLinkedList {
         private final double value;
         private Element next;
         private Element prev;
+    }
+
+    //Observer Pattern
+    private List<Observer> observers = new ArrayList<>();
+
+    public void attach(Observer observer)
+    {
+        observers.add(observer);
+    }
+
+    public void detach(Observer observer)
+    {
+        observers.remove(observer);
+    }
+
+    public void updateObservers()
+    {
+        for (Observer observer: observers)
+        {
+            observer.update(this);
+        }
     }
 }
